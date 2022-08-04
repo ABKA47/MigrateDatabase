@@ -1,0 +1,38 @@
+﻿<Properties StartupConfiguration="{EF780A3A-6900-45A1-9814-22D4FC36856B}|Default" GitUserInfo="UsingGIT">
+  <MonoDevelop.Ide.Workbench>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="MigrateDatabase" expanded="True" selected="True">
+            <Node name="MigrateDatabase" expanded="True">
+              <Node name="ApplicationDbContext" expanded="True" />
+              <Node name="DataAccess" expanded="True">
+                <Node name="Abstract" expanded="True" />
+                <Node name="Concrete" expanded="True">
+                  <Node name="NewDb" expanded="True" />
+                  <Node name="OldDb" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="Entities" expanded="True">
+                <Node name="Concrete" expanded="True">
+                  <Node name="NewDb" expanded="True" />
+                  <Node name="OldDb" expanded="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.MigrateDatabase PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
