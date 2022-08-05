@@ -12,7 +12,7 @@ namespace MigrateDatabase.Entities.Concrete.OldDb
 		public int fldRecId { get; set; }
 
 		
-		public int? fldMemberType { get; set; }
+		public int fldMemberType { get; set; }
 		public string? fldTitle { get; set; }
 		public string? fldName { get; set; }
 		public string? fldSurname { get; set; }

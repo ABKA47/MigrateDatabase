@@ -6,6 +6,7 @@ using MigrateDatabase.DataAccess.Concrete.OldDb;
 using MigrateDatabase.DataAccess.NewDb;
 using MigrateDatabase.DataAccess.OldDb;
 using MigrateDatabase.Entities.Concrete.NewDb;
+using MigrateDatabase.Entities.Concrete.OldDb;
 
 namespace MigrateDatabase
 {
@@ -27,7 +28,7 @@ namespace MigrateDatabase
             KurumsalMembersDal kurumsalMembersDal = new KurumsalMembersDal();
 
 
-           // MigrateUsers(memberDal,userDal);
+            MigrateUsers(memberDal,userDal);
             MigrateMembers(memberDal, membersDal);
             MigrateBireyselMembers(memberDal, bireyselMembersDal);
             MigrateKurumsalMembers(memberDal, kurumsalMembersDal);
@@ -96,67 +97,66 @@ namespace MigrateDatabase
 
         private static void MigrateUsers(IMemberDal _memberDal, IUserDal _userDal)
         {
-           
+            var count = 1;
                 
         foreach (var item in _memberDal.getMembers())
         {
-                for (int i = 1; i <= 1800; i++)
-                {
-                    if(item.fldRecId == i)
+                   while(item.fldRecId != count)
                     {
-                        var user = new Users()
-                        {
-                            Adi = item.fldName,
-                            Soyadi = item.fldSurname,
-                            TelefonKodu = "+90",
-                            TelefonNo = item.fldMobilePhone,
-                            Email = item.fldEMail,
-                            EmailGonderildi = item.fldIsActive,
-                            EmailDogrulama = item.fldIsActive,
-                            KullaniciAdi = null,
-                            PasswordSalt = null,
-                            PasswordHash = null,
-                            SosyaldenKayit = false,
-                            SosyalMedyaAdi = null,
-                            SosyalMedyaId = null,
-                            Status = item.fldIsActive,
-                            KayitTarihi = item.fldCreatedOn,
-                            KayitDurumu = item.fldIsActive
-
-
-                        };
-                        _userDal.Add(user);
-                    }
-                    else
+                    var userNull = new Users()
                     {
-                        var user = new Users()
-                        {
-                            Adi = null,
-                            Soyadi = null,
-                            TelefonKodu = null,
-                            TelefonNo = null,
-                            Email = null,
-                            EmailGonderildi = null,
-                            EmailDogrulama = null,
-                            KullaniciAdi = null,
-                            PasswordSalt = null,
-                            PasswordHash = null,
-                            SosyaldenKayit = false,
-                            SosyalMedyaAdi = null,
-                            SosyalMedyaId = null,
-                            Status = null,
-                            KayitTarihi = null,
-                            KayitDurumu = null
+                        Adi = null,
+                        Soyadi = null,
+                        TelefonKodu = null,
+                        TelefonNo = null,
+                        Email = null,
+                        EmailGonderildi = null,
+                        EmailDogrulama = null,
+                        KullaniciAdi = null,
+                        PasswordSalt = null,
+                        PasswordHash = null,
+                        SosyaldenKayit = false,
+                        SosyalMedyaAdi = null,
+                        SosyalMedyaId = null,
+                        Status = null,
+                        KayitTarihi = null,
+                        KayitDurumu = false
 
 
-                        };
-                        _userDal.Add(user);
-                    }
+                    };
+                    _userDal.Add(userNull);
+                    count++;
+
                    
+                    }
+           
 
-                }
+                var user = new Users()
+                {
+                    Adi = item.fldName,
+                    Soyadi = item.fldSurname,
+                    TelefonKodu = "+90",
+                    TelefonNo = item.fldMobilePhone,
+                    Email = item.fldEMail,
+                    EmailGonderildi = item.fldIsActive,
+                    EmailDogrulama = item.fldIsActive,
+                    KullaniciAdi = null,
+                    PasswordSalt = null,
+                    PasswordHash = null,
+                    SosyaldenKayit = false,
+                    SosyalMedyaAdi = null,
+                    SosyalMedyaId = null,
+                    Status = item.fldIsActive,
+                    KayitTarihi = item.fldCreatedOn,
+                    KayitDurumu = item.fldIsActive
 
-          }
+
+                };
+                _userDal.Add(user);
+                count++;
+
+
+            }
             Console.WriteLine("Users eklendi.");
             
         }
@@ -212,24 +212,26 @@ namespace MigrateDatabase
         {
             foreach (var item in _memberDal.GetIndividualMembers()) 
             {
-                var bireyselMember = new BireyselMember()
-                {
-                    UserId = item.UserId,
-                    Uyruk = GetNationality(item.Uyruk),
-                    Cinsiyet = GetGender(item.Cinsiyet),
-                    TcKimlikNo = GetIdentity(item.IdentiyType,item.TcKimlikNo),
-                    TcKimlikDogrulama = item.TcKimlikDogrulama,
-                    YabanciKimlikNo = GetIdentity(item.IdentiyType, item.YabanciKimlikNo),
-                    YabanciDogrulama = false,
-                    DogumTarihi = item.DogumTarihi,
-                    MemberImageUrl = GetMemberImageUrl(item.MemberType,null,item.MemberImageUrl),
-                    AkademikUnvan = item.AkademikUnvan,
-                    YillikGelir = item.YillikGelir,
-                    KayitDurumu = item.KayitDurumu,
-                    BireyselMemberKayit = item.BireyselMemberKayit
-                };
+                    var bireyselMember = new BireyselMember()
+                    {
+                        UserId = item.UserId,
+                        Uyruk = GetNationality(item.Uyruk),
+                        Cinsiyet = GetGender(item.Cinsiyet),
+                        TcKimlikNo = GetIdentityTCKN(item.IdentiyType, item.TcKimlikNo),
+                        TcKimlikDogrulama = item.TcKimlikDogrulama,
+                        YabanciKimlikNo = GetIdentityYKN(item.IdentiyType, item.YabanciKimlikNo),
+                        YabanciDogrulama = false,
+                        DogumTarihi = item.DogumTarihi,
+                        MemberImageUrl = GetMemberImageUrl(item.MemberType, null, item.MemberImageUrl),
+                        AkademikUnvan = item.AkademikUnvan,
+                        YillikGelir = item.YillikGelir,
+                        KayitDurumu = item.KayitDurumu,
+                        BireyselMemberKayit = item.BireyselMemberKayit
+                    };
 
-                _bireyselMembersDal.Add(bireyselMember);
+                    _bireyselMembersDal.Add(bireyselMember);
+              
+               
             }
             Console.WriteLine("Bireysel Members eklendi.");
         }
@@ -250,19 +252,32 @@ namespace MigrateDatabase
             }
             return "Erkek";
         }
-        private static string? GetIdentity(string? identityType,string identityNo)
+        private static string? GetIdentityTCKN(string identityType,string identityNo)
         {
-            if (identityType.Equals("TCKN"))
-            {
-                return identityNo;
-            }else if (identityType.Equals("YKN"))
-            {
-                return identityNo;
-            }
-            else
+            if ( identityType == null)
             {
                 return null;
+               
             }
+            else if (identityType.Equals("TCKN"))
+            {
+                return identityNo;
+            }
+            return null;
+        }
+
+        private static string? GetIdentityYKN(string identityType,string identityNo)
+        {
+            if (identityType == null)
+            {
+                return null;
+
+            }
+            else if (identityType.Equals("YKN"))
+            {
+                return identityNo;
+            }
+            return null;
         }
 
         private static string? GetMemberImageUrl(int? memberType,string? IdentityType,string photo)
@@ -281,24 +296,76 @@ namespace MigrateDatabase
         {
             foreach (var item in _memberDal.getMembers())
             {
-                var kurumsalMember = new KurumsalMember()
+                if(item.fldMemberType == 2)
                 {
-                    UserId = item.fldRecId,
-                    SirketUnvani = item.fldTitle,
-                    VergiDairesi = null,
-                    VergiNumarasi = item.fldTCNo_VKN,
-                    IsletmeTuruId = null,
-                    SektorId = null,
-                    FirmaLogoUrl = GetMemberImageUrl(null, item.fldIdendityType, item.fldPhoto),
-                    KayitDurumu = item.fldIsActive,
-                    VergiLevhasiUrl = item.fldEnt_FileVergiLevha,
-                    ImzaSirkusuUrl = item.fldEnt_FileImzaSurkusu
-                };
+                    var kurumsalMember = new KurumsalMember()
+                    {
+                        UserId = item.fldRecId,
+                        SirketUnvani = item.fldTitle,
+                        VergiDairesi = null,
+                        VergiNumarasi = GetVergiDairesi(item.fldMemberType, item.fldTCNo_VKN),
+                        IsletmeTuruId = null,
+                        SektorId = null,
+                        FirmaLogoUrl = GetMemberImageUrl(null, item.fldIdendityType, item.fldPhoto),
+                        KayitDurumu = item.fldIsActive,
+                        VergiLevhasiUrl = item.fldEnt_FileVergiLevha,
+                        ImzaSirkusuUrl = item.fldEnt_FileImzaSurkusu
+                    };
 
-                _kurumsalMembersDal.Add(kurumsalMember);
+                    _kurumsalMembersDal.Add(kurumsalMember);
+                }
+               
             }
             Console.WriteLine("Kurumsal Members eklendi.");
         }
 
+        private static string? GetVergiDairesi(int memberType,string vergiNo)
+        {
+            if (memberType == null)
+            {
+                return null;
+
+            }
+            else if (memberType == 2)
+            {
+                return vergiNo;
+            }
+            return null;
+        }
+
+        private static void MigrateMemberSosyalMedyalar(IMemberDal _memberDal,IMemberSosyalMedyalarDal _memberSosyalMedyalar)
+        {
+            foreach (var item in _memberDal.getMembers())
+            {
+                foreach (var sosyalMedya in SosyalMedyalar())
+                {
+                    var memberSosyalMedyalar = new MemberSosyalMedyalar()
+                    {
+                        UserId = item.fldRecId,
+                        SosyalMedyaAdi = GetSosyalMedyaAdi(sosyalMedya,item),
+                        SosyalMedyaAdresi = GetSosyalMedyaAdresi(item)
+                    };
+
+                }
+
+            }
+        }
+
+        private static string[] SosyalMedyalar()
+        {
+            return new string[] { "Facebook", "Twitter" ,"Linkedin","YouTube","Instagram"};
+        }
+
+        private static string? GetSosyalMedyaAdi(string sosyalMedyaAdi,TblMember member)
+        {
+            if(sosyalMedyaAdi == null)
+            {
+                return null;
+
+            }else if (sosyalMedyaAdi.Equals("Facebook") && member.fldFacebook != null)
+            {
+                return "Facebook";
+            }
+        }
     }
 }

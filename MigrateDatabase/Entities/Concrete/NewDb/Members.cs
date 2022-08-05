@@ -11,8 +11,8 @@ namespace MigrateDatabase.Entities.Concrete.NewDb
     {
         [Key]
         public int Id { get; set; }
-        public int? UserId { get; set; }
-        public int? UyelikTipiId { get; set; }
+        public int UserId { get; set; }
+        public int UyelikTipiId { get; set; }
         public string? MkkNo { get; set; }
         public bool? MkkKayit { get; set; }
         public bool? MkkNoDogrulama { get; set; }

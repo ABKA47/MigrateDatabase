@@ -11,7 +11,7 @@ namespace MigrateDatabase.ApplicationDbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost;Initial Catalog=Fonangels; User ID= sa;Password=Abka2371..;Persist Security Info=False; TrustServerCertificate=False; MultipleActiveResultSets=true;Connection Timeout=30;");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Initial Catalog=fonangelsdb;");
         }
 
        //public DbSet<T> Tables { get; set; }

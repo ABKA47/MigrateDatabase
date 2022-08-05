@@ -10,7 +10,7 @@ namespace MigrateDatabase.ApplicationDbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost;Initial Catalog=Fonangels; User ID= sa;Password=Abka2371..;Persist Security Info=False; TrustServerCertificate=False; MultipleActiveResultSets=true;Connection Timeout=30;");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Initial Catalog=FonangelsNewDb;");
         }
         public DbSet<Users> Users { get; set; }
         public DbSet<GirisimAnaKategoriler> GirisimAnaKategoriler {get;set;}
@@ -20,5 +20,7 @@ namespace MigrateDatabase.ApplicationDbContext
         public DbSet<Member> Members { get; set; }
         public DbSet<BireyselMember> BireyselMembers { get; set; }
         public DbSet<KurumsalMember> KurumsalMembers { get; set; }
+
+        public DbSet<MemberSosyalMedyalar> MemberSosyalMedyalar { get; set; }  
     }
 }
